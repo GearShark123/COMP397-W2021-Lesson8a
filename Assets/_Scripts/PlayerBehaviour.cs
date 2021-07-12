@@ -8,13 +8,18 @@ public class PlayerBehaviour : MonoBehaviour
     //public Rigidbody rigidBody;
     public CharacterController controller;
 
-    [Header("Control Properties")]
+    [Header("Controls")]
+    public Joystick joystick;
+    public float horizontalSensitivity;
+    public float verticalSensitivity;
+
+    [Header("Movement")]
     public float maxSpeed = 10.0f;
     public float gravity = -30.0f;
     public float jumpHeight = 3.0f;
     public Vector3 velocity;
 
-    [Header("Ground Detection Properties")]
+    [Header("Ground Detection")]
     public Transform groundCheck;
     public LayerMask groundMask;
     public float groundRadius = 0.5f;
@@ -51,8 +56,11 @@ public class PlayerBehaviour : MonoBehaviour
             velocity.y = -2.0f;
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        //x = Input.GetAxis("Horizontal");
+        //z = Input.GetAxis("Vertical");
+
+        float x = joystick.Horizontal;
+        float z = joystick.Vertical;   
 
         Vector3 move = transform.right * x + transform.forward * z;
 
