@@ -60,7 +60,7 @@ public class PlayerBehaviour : MonoBehaviour
         //z = Input.GetAxis("Vertical");
 
         float x = joystick.Horizontal;
-        float z = joystick.Vertical;   
+        float z = joystick.Vertical;
 
         Vector3 move = transform.right * x + transform.forward * z;
 
@@ -68,8 +68,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetButton("Jump") && isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
-            jumpSound.Play();
+            Jump();
         }
 
         velocity.y += gravity * Time.deltaTime;
@@ -78,7 +77,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            miniMap.SetActive(!miniMap.activeInHierarchy);
+            ToggleMiniMap();
         }
 
         //if (isGrounded)
@@ -134,6 +133,17 @@ public class PlayerBehaviour : MonoBehaviour
     //    }
     //}
 
+    void Jump()
+    {
+        velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
+        jumpSound.Play();
+    }
+
+    void ToggleMiniMap()
+    {
+        miniMap.SetActive(!miniMap.activeInHierarchy);
+    }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
@@ -154,5 +164,18 @@ public class PlayerBehaviour : MonoBehaviour
     public void PlayHitSound()
     {
         hitSound.Play();
+    }
+
+    public void OnJumpButtonPressed()
+    {
+        if (isGrounded)
+        {
+            Jump();
+        }
+    }
+
+    public void OnMapButtonPressed()
+    {
+        ToggleMiniMap();
     }
 }
